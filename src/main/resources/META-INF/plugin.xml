@@ -31,6 +31,10 @@
         <configurationType
             implementation="jp.s6n.idea.ghactions.execution.JobRunConfigurationType"
         />
+        <externalAnnotator
+            implementationClass="jp.s6n.idea.ghactions.annotator.ActionLintAnnotator"
+            language="yaml"
+        />
         <languageInjectionContributor
             implementationClass="jp.s6n.idea.ghactions.injection.RunScriptInjector"
             language="yaml"

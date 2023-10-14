@@ -1,7 +1,9 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.9.10"
     id("org.jetbrains.intellij") version "1.16.0"
+
+    kotlin("jvm") version "1.9.10"
+    kotlin("plugin.serialization") version "1.9.10"
 }
 
 group = "jp.s6n.idea"
@@ -19,6 +21,10 @@ intellij {
         "com.jetbrains.sh",
         "org.jetbrains.plugins.yaml",
     ))
+}
+
+dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 }
 
 tasks {

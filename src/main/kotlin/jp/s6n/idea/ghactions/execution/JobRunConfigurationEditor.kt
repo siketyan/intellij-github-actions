@@ -9,13 +9,26 @@ import javax.swing.JComponent
 import javax.swing.JPanel
 
 class JobRunConfigurationEditor : SettingsEditor<JobRunConfiguration>() {
-    private var workingDirectoryField: TextFieldWithBrowseButton? = null
-    private var workflowPathField: TextFieldWithBrowseButton? = null
-    private var jobNameField: JBTextField? = null
-
+    private lateinit var workingDirectoryField: TextFieldWithBrowseButton
+    private lateinit var workflowPathField: TextFieldWithBrowseButton
+    private lateinit var jobNameField: JBTextField
     private lateinit var myPanel: JPanel
 
-    init {
+    override fun resetEditorFrom(s: JobRunConfiguration) =
+        s.allOptions.let {
+            workingDirectoryField.text = s.allOptions.workingDirectory
+            workflowPathField.text = s.allOptions.workflowPath
+            jobNameField.text = s.allOptions.jobName
+        }
+
+    override fun applyEditorTo(s: JobRunConfiguration) =
+        s.allOptions.let {
+            it.workingDirectory = workingDirectoryField.text
+            it.workflowPath = workflowPathField.text
+            it.jobName = jobNameField.text
+        }
+
+    override fun createEditor(): JComponent {
         workingDirectoryField = TextFieldWithBrowseButton().also {
             it.addBrowseFolderListener("Working Directory", null, null,
                 FileChooserDescriptorFactory.createSingleFolderDescriptor())
@@ -28,26 +41,12 @@ class JobRunConfigurationEditor : SettingsEditor<JobRunConfiguration>() {
 
         jobNameField = JBTextField()
 
-        FormBuilder.createFormBuilder()
-            .addLabeledComponent("Working directory", workingDirectoryField!!)
-            .addLabeledComponent("Workflow path", workflowPathField!!)
-            .addLabeledComponent("Job name", jobNameField!!)
+        myPanel = FormBuilder.createFormBuilder()
+            .addLabeledComponent("Working directory", workingDirectoryField)
+            .addLabeledComponent("Workflow path", workflowPathField)
+            .addLabeledComponent("Job name", jobNameField)
             .panel
+
+        return myPanel
     }
-
-    override fun resetEditorFrom(s: JobRunConfiguration) =
-        s.allOptions.let {
-            workingDirectoryField?.text = s.allOptions.workingDirectory
-            workflowPathField?.text = s.allOptions.workflowPath
-            jobNameField?.text = s.allOptions.jobName
-        }
-
-    override fun applyEditorTo(s: JobRunConfiguration) =
-        s.allOptions.let {
-            it.workingDirectory = workingDirectoryField?.text ?: ""
-            it.workflowPath = workflowPathField?.text ?: ""
-            it.jobName = jobNameField?.name ?: ""
-        }
-
-    override fun createEditor(): JComponent = myPanel
 }
