@@ -5,9 +5,9 @@ import com.intellij.psi.PsiFile
 object WorkflowFileMatcher {
     private val reWorkflowPath = Regex("""^.+/\.github/workflows/.+\.yaml$""")
 
-    fun match(path: String) =
+    private fun match(path: String) =
         path.matches(reWorkflowPath)
 
     fun match(file: PsiFile) =
-        match(file.virtualFile.path)
+        file.virtualFile?.let { match(it.path) } ?: false
 }

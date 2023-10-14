@@ -1,0 +1,70 @@
+{
+  parserClass="jp.s6n.idea.ghactions.lang.WorkflowInlineParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="WI"
+  psiImplClassSuffix="Impl"
+  psiPackage="jp.s6n.idea.ghactions.lang.psi"
+  psiImplPackage="jp.s6n.idea.ghactions.lang.psi.impl"
+
+  elementTypeHolderClass="jp.s6n.idea.ghactions.lang.WorkflowInlineTypes"
+  elementTypeClass="jp.s6n.idea.ghactions.lang.WorkflowInlineElementType"
+  tokenTypeClass="jp.s6n.idea.ghactions.lang.WorkflowInlineTokenType"
+
+  tokens = [
+    OP_COMMA=","
+    OP_DOT="."
+    OP_NOT="!"
+    OP_LT="<"
+    OP_LTE="<="
+    OP_GT=">"
+    OP_GTE=">="
+    OP_EQ="=="
+    OP_NE="!="
+    OP_AND="&&"
+    OP_OR="||"
+    LEFT_BRACKET="["
+    RIGHT_BRACKET="]"
+    LEFT_PAREN="("
+    RIGHT_PAREN=")"
+
+    NULL="null"
+    TRUE="true"
+    FALSE="false"
+
+    space="regexp:\s+"
+    integer='regexp:\d+'
+    number='regexp:-?\d+(\.\d+)?(e-?\d+)?'
+    id="regexp:\p{Alpha}\w*"
+    string="regexp:'([^']|'')*'"
+  ]
+}
+
+external root ::= expression
+
+expression ::= operation | simple_expr
+
+simple_expr ::= negate | call | group | qualifier | literal
+
+call ::= ident LEFT_PAREN (expression OP_COMMA)* expression RIGHT_PAREN
+
+group ::= LEFT_PAREN expression RIGHT_PAREN
+
+operation ::= simple_expr condition_operator expression
+
+condition_operator ::= OP_LTE | OP_LT | OP_GTE | OP_GT | OP_EQ | OP_NE | OP_AND | OP_OR
+
+negate ::= OP_NOT simple_expr
+
+qualifier ::= ident (indexer | (OP_DOT qualifier))*
+
+indexer ::= LEFT_BRACKET integer RIGHT_BRACKET
+
+ident ::= id
+
+literal ::= NULL | TRUE | FALSE | number_literal | string_literal
+
+number_literal ::= integer | number {extends=literal}
+
+string_literal ::= string {extends=literal}

@@ -27,6 +27,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 }
 
+sourceSets["main"].java.srcDirs("src/main/gen")
+
 tasks {
     withType<JavaCompile> {
         sourceCompatibility = "17"

@@ -1,0 +1,2 @@
+src/main/gen/** linguist-generated=true
+*.flex linguist-generated=true

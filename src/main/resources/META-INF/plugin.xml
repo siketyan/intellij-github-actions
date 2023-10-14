@@ -17,6 +17,7 @@
         <p>GitHub Actions support plugin for IntelliJ Platform.</p>
         <p>Currently supports:</p>
         <ul>
+            <li>Basic syntax highlighting for inline expressions</li>
             <li>Language injection for run scripts</li>
             <li>Running workflows locally using act</li>
             <li>Linting workflows using actionlint</li>
@@ -63,9 +64,26 @@
             implementationClass="jp.s6n.idea.ghactions.annotator.ActionLintAnnotator"
             language="yaml"
         />
+        <fileType
+            name="GitHub Workflow Expression"
+            implementationClass="jp.s6n.idea.ghactions.lang.WorkflowInlineFileType"
+            fieldName="INSTANCE"
+            language="GitHubWorkflowInline"
+        />
         <languageInjectionContributor
             implementationClass="jp.s6n.idea.ghactions.injection.RunScriptInjector"
             language="yaml"
+        />
+        <lang.syntaxHighlighterFactory
+            implementationClass="jp.s6n.idea.ghactions.lang.highlighting.WISyntaxHighlighterFactory"
+            language="GitHubWorkflowInline"
+        />
+        <lang.parserDefinition
+            implementationClass="jp.s6n.idea.ghactions.lang.WorkflowInlineParserDefinition"
+            language="GitHubWorkflowInline"
+        />
+        <multiHostInjector
+            implementation="jp.s6n.idea.ghactions.injection.InlineExpressionInjector"
         />
         <runConfigurationProducer
             implementation="jp.s6n.idea.ghactions.execution.JobRunConfigurationProducer"
