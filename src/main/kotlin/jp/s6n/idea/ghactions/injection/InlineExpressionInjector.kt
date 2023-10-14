@@ -14,17 +14,27 @@ class InlineExpressionInjector : MultiHostInjector {
     ) {
         if (context !is YAMLScalar) return
 
-        val start = context.text.indexOf("\${{")+3
-        val end = context.text.indexOf("}}", start)
-        if (start < 0 || end < 0) return
+        var offset = 0
+        while (true) {
+            val start = context.text.indexOf(INLINE_EXPR_START, offset)
+            val end = context.text.indexOf(INLINE_EXPR_END, start)
+            if (start < 0 || end < 0) break
 
-        registrar
-            .startInjecting(WorkflowInlineLanguage.INSTANCE)
-            .addPlace(null, null, context, TextRange.create(start, end))
-            .doneInjecting()
+            registrar
+                .startInjecting(WorkflowInlineLanguage.INSTANCE)
+                .addPlace("", "", context, TextRange.create(start + INLINE_EXPR_START.length, end))
+                .doneInjecting()
+
+            offset = end
+        }
     }
 
     override fun elementsToInjectIn(): List<Class<YAMLScalar>> {
         return listOf(YAMLScalar::class.java)
+    }
+
+    companion object {
+        private const val INLINE_EXPR_START = "\${{"
+        private const val INLINE_EXPR_END = "}}"
     }
 }
