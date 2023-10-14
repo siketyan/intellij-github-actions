@@ -28,6 +28,29 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable
+            parentId="tools"
+            id="jp.s6n.idea.ghactions"
+            displayName="GitHub Actions Support"
+            instance="jp.s6n.idea.ghactions.settings.PluginSettings"
+        >
+            <configurable
+                id="jp.s6n.idea.ghactions.actionlint"
+                displayName="actionlint"
+                instance="jp.s6n.idea.ghactions.settings.ActionLintSettings"
+            />
+            <configurable
+                id="jp.s6n.idea.ghactions.act"
+                displayName="act"
+                instance="jp.s6n.idea.ghactions.settings.ActSettings"
+            />
+        </applicationConfigurable>
+        <applicationService
+            serviceImplementation="jp.s6n.idea.ghactions.settings.ActionLintSettings$State"
+        />
+        <applicationService
+            serviceImplementation="jp.s6n.idea.ghactions.settings.ActSettings$State"
+        />
         <configurationType
             implementation="jp.s6n.idea.ghactions.execution.JobRunConfigurationType"
         />

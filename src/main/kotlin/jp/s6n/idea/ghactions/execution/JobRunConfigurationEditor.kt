@@ -29,14 +29,18 @@ class JobRunConfigurationEditor : SettingsEditor<JobRunConfiguration>() {
         }
 
     override fun createEditor(): JComponent {
-        workingDirectoryField = TextFieldWithBrowseButton().also {
-            it.addBrowseFolderListener("Working Directory", null, null,
-                FileChooserDescriptorFactory.createSingleFolderDescriptor())
+        workingDirectoryField = TextFieldWithBrowseButton().apply {
+            addBrowseFolderListener(
+                "Working Directory", null, null,
+                FileChooserDescriptorFactory.createSingleFolderDescriptor(),
+            )
         }
 
-        workflowPathField = TextFieldWithBrowseButton().also {
-            it.addBrowseFolderListener("Workflow Path", null, null,
-                FileChooserDescriptorFactory.createSingleFileDescriptor())
+        workflowPathField = TextFieldWithBrowseButton().apply {
+            addBrowseFolderListener(
+                "Workflow Path", null, null,
+                FileChooserDescriptorFactory.createSingleFileDescriptor(),
+            )
         }
 
         jobNameField = JBTextField()

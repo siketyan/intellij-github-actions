@@ -6,13 +6,18 @@ import com.intellij.execution.process.ProcessHandlerFactory
 import com.intellij.execution.process.ProcessTerminatedListener
 import jp.s6n.idea.ghactions.execution.JobRunConfiguration
 import jp.s6n.idea.ghactions.execution.runner.Runner
+import jp.s6n.idea.ghactions.settings.ActSettings
 
 class ActRunner : Runner {
     override fun run(options: JobRunConfiguration.Options): ProcessHandler =
         ProcessHandlerFactory
             .getInstance()
             .createColoredProcessHandler(
-                GeneralCommandLine("act", "-W", options.workflowPath, "-j", options.jobName)
+                GeneralCommandLine(
+                    ActSettings.State.getInstance().actPath,
+                    "-W", options.workflowPath,
+                    "-j", options.jobName,
+                )
                     .withWorkDirectory(options.workingDirectory)
             )
             .also {

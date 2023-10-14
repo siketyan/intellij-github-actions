@@ -20,7 +20,7 @@ class JobRunConfigurationProducer : LazyRunConfigurationProducer<JobRunConfigura
         val file = context.psiLocation?.containingFile ?: return false
 
         configuration.allOptions.workingDirectory =
-            file.virtualFile.findFileByRelativePath("../..")?.path ?: return false
+            file.virtualFile.findFileByRelativePath("../../..")?.path ?: return false
 
         configuration.allOptions.workflowPath = file.virtualFile.path
 
