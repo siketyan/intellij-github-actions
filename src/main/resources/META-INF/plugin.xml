@@ -57,6 +57,10 @@
         <applicationService
             serviceImplementation="jp.s6n.idea.ghactions.settings.ActSettings$State"
         />
+        <codeInsight.lineMarkerProvider
+            implementationClass="jp.s6n.idea.ghactions.marker.NeedsLineMarkerProvider"
+            language="yaml"
+        />
         <configurationType
             implementation="jp.s6n.idea.ghactions.execution.JobRunConfigurationType"
         />
