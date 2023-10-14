@@ -28,7 +28,7 @@ WHITE_SPACE=\s+
 SPACE=[ \t\n\x0B\f\r]+
 INTEGER=[0-9]+
 NUMBER=-?[0-9]+(\.[0-9]+)?(e-?[0-9]+)?
-ID=[:letter:][a-zA-Z_0-9]*
+ID=[:letter:][\w\-_]*
 STRING='([^']|'')*'
 
 %%

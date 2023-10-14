@@ -36,7 +36,7 @@
     space="regexp:\s+"
     integer='regexp:\d+'
     number='regexp:-?\d+(\.\d+)?(e-?\d+)?'
-    id="regexp:\p{Alpha}\w*"
+    id="regexp:\p{Alpha}[\w\-_]*"
     string="regexp:'([^']|'')*'"
   ]
 }
