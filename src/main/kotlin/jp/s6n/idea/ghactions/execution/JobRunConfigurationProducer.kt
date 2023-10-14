@@ -25,6 +25,7 @@ class JobRunConfigurationProducer : LazyRunConfigurationProducer<JobRunConfigura
         configuration.allOptions.workflowPath = file.virtualFile.path
 
         (sourceElement.get().parent as? YAMLKeyValue)?.let {
+            configuration.name = it.keyText
             configuration.allOptions.jobName = it.keyText
         }
 
