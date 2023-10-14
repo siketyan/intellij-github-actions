@@ -2,14 +2,10 @@ package jp.s6n.idea.ghactions.injection
 
 import com.intellij.lang.injection.MultiHostInjector
 import com.intellij.lang.injection.MultiHostRegistrar
-import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiLanguageInjectionHost
 import jp.s6n.idea.ghactions.lang.WorkflowInlineLanguage
 import org.jetbrains.yaml.psi.YAMLScalar
-import org.jetbrains.yaml.psi.YAMLScalarText
-import org.jetbrains.yaml.psi.YAMLValue
 
 class InlineExpressionInjector : MultiHostInjector {
     override fun getLanguagesToInject(
@@ -21,8 +17,6 @@ class InlineExpressionInjector : MultiHostInjector {
         val start = context.text.indexOf("\${{")+3
         val end = context.text.indexOf("}}", start)
         if (start < 0 || end < 0) return
-
-        Logger.getInstance(this.javaClass).warn(TextRange.create(start, end).substring(context.text))
 
         registrar
             .startInjecting(WorkflowInlineLanguage.INSTANCE)
