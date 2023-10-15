@@ -18,6 +18,7 @@
         <p>Currently supports:</p>
         <ul>
             <li>Basic syntax highlighting for inline expressions</li>
+            <li>Basic code completion for context properties</li>
             <li>Language injection for run scripts</li>
             <li>Running workflows locally using act</li>
             <li>Linting workflows using actionlint</li>

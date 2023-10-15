@@ -12,6 +12,7 @@
 ## Features
 
 - Basic syntax highlighting for inline expressions
+- Basic code completion for context properties
 - Language injection for run scripts
 - Running workflows locally using act
 - Linting workflows using actionlint
