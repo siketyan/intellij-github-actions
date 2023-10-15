@@ -34,15 +34,15 @@ public class WIQualifierImpl extends ASTWrapperPsiElement implements WIQualifier
   }
 
   @Override
-  @NotNull
-  public List<WIIndexer> getIndexerList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WIIndexer.class);
+  @Nullable
+  public WIIndexer getIndexer() {
+    return findChildByClass(WIIndexer.class);
   }
 
   @Override
-  @NotNull
-  public List<WIQualifier> getQualifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WIQualifier.class);
+  @Nullable
+  public WIQualifier getQualifier() {
+    return findChildByClass(WIQualifier.class);
   }
 
 }

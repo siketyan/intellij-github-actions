@@ -57,7 +57,7 @@ condition_operator ::= OP_LTE | OP_LT | OP_GTE | OP_GT | OP_EQ | OP_NE | OP_AND 
 
 negate ::= OP_NOT simple_expr
 
-qualifier ::= ident (indexer | (OP_DOT qualifier))*
+qualifier ::= ident (indexer | (OP_DOT qualifier))?
 
 indexer ::= LEFT_BRACKET integer RIGHT_BRACKET
 

@@ -200,7 +200,7 @@ public class WorkflowInlineParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident (indexer | (OP_DOT qualifier))*
+  // ident (indexer | (OP_DOT qualifier))?
   public static boolean qualifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "qualifier")) return false;
     if (!nextTokenIs(b, ID)) return false;
@@ -212,14 +212,10 @@ public class WorkflowInlineParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (indexer | (OP_DOT qualifier))*
+  // (indexer | (OP_DOT qualifier))?
   private static boolean qualifier_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "qualifier_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!qualifier_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "qualifier_1", c)) break;
-    }
+    qualifier_1_0(b, l + 1);
     return true;
   }
 

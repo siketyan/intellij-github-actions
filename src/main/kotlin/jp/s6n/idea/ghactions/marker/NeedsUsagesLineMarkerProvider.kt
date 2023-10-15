@@ -9,9 +9,11 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.util.parentOfType
 import jp.s6n.idea.ghactions.fs.WorkflowFileMatcher
 import jp.s6n.idea.ghactions.schema.Workflow
+import kotlinx.serialization.SerializationException
 import org.jetbrains.yaml.YAMLUtil
 import org.jetbrains.yaml.psi.YAMLDocument
 import org.jetbrains.yaml.psi.YAMLKeyValue
+import org.yaml.snakeyaml.error.YAMLException
 
 class NeedsUsagesLineMarkerProvider : RelatedItemLineMarkerProvider() {
     override fun collectNavigationMarkers(
@@ -27,10 +29,10 @@ class NeedsUsagesLineMarkerProvider : RelatedItemLineMarkerProvider() {
         val workflow: Workflow
         try {
             workflow = Workflow.fromYaml(element.containingFile.virtualFile.inputStream)
-        } catch (e: Throwable) {
-            Logger.getInstance(this.javaClass).warn(e)
-
-            return
+        } catch (e: SerializationException) {
+            return Logger.getInstance(this.javaClass).warn(e)
+        } catch (e: YAMLException) {
+            return Logger.getInstance(this.javaClass).warn(e)
         }
 
         val jobName = path[1]

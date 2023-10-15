@@ -65,6 +65,10 @@
             implementationClass="jp.s6n.idea.ghactions.marker.NeedsUsagesLineMarkerProvider"
             language="yaml"
         />
+        <completion.contributor
+            implementationClass="jp.s6n.idea.ghactions.lang.completion.WorkflowContextCompletionContributor"
+            language="GitHubWorkflowInline"
+        />
         <configurationType
             implementation="jp.s6n.idea.ghactions.execution.JobRunConfigurationType"
         />

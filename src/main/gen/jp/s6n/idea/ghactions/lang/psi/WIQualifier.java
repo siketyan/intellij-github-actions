@@ -10,10 +10,10 @@ public interface WIQualifier extends PsiElement {
   @NotNull
   WIIdent getIdent();
 
-  @NotNull
-  List<WIIndexer> getIndexerList();
+  @Nullable
+  WIIndexer getIndexer();
 
-  @NotNull
-  List<WIQualifier> getQualifierList();
+  @Nullable
+  WIQualifier getQualifier();
 
 }
