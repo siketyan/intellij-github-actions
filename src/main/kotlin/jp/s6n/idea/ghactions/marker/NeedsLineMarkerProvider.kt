@@ -20,7 +20,11 @@ class NeedsLineMarkerProvider : RelatedItemLineMarkerProvider() {
         if (element !is YAMLScalar) return
 
         val path = YAMLUtil.getConfigFullNameParts(element)
-        if (path.count() < 3 || path[0] != "jobs" || path[2] != "needs") return
+        if (
+            path.count() < 3
+            || path[0] != "jobs"
+            || (path[2] != "needs" && !path[2].startsWith("needs["))
+        ) return
 
         val document = element.parentOfType<YAMLDocument>() ?: return
         val target = YAMLUtil.getQualifiedKeyInDocument(document, listOf("jobs", element.textValue))?.key ?: return
