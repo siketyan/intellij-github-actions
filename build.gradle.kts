@@ -26,6 +26,8 @@ intellij {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("com.charleskorn.kaml:kaml:0.55.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.3")
+    implementation("org.yaml:snakeyaml:2.2")
 }
 
 sourceSets["main"].java.srcDirs("src/main/gen")

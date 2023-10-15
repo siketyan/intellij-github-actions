@@ -5,7 +5,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonTransformingSerializer
 
-@Serializable(with = Concurrency.Serializer::class)
+@Serializable
 data class Concurrency(
     val group: String? = null,
     val cancelInProgress: Boolean? = null,

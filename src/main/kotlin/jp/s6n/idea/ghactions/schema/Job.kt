@@ -21,14 +21,16 @@ data class Job(
     @SerialName("if")
     val runsIf: String? = null,
     val runsOn: String? = null,
+    @Serializable(with = Environment.Serializer::class)
     val environment: Environment? = null,
+    @Serializable(with = Concurrency.Serializer::class)
     val concurrency: Concurrency? = null,
     val outputs: Map<String, String>? = null,
     val env: Map<String, String>? = null,
     val defaults: Defaults? = null,
     val steps: List<Step>? = null,
     val timeoutMinutes: Int? = null,
-    val strategy: String? = null,
+    val strategy: Strategy? = null,
     val continueOnError: Boolean? = null,
     // TODO: container
     // TODO: services
@@ -36,7 +38,7 @@ data class Job(
     val with: Map<String, String>? = null,
     // TODO: secrets
 ) {
-    @Serializable(with = Environment.Serializer::class)
+    @Serializable
     data class Environment(
         val name: String? = null,
         val url: String? = null,

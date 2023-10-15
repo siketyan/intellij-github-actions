@@ -31,12 +31,5 @@ class NeedsLineMarkerProvider : RelatedItemLineMarkerProvider() {
                 .setTooltipText("Navigate to job declaration")
                 .createLineMarkerInfo(element.firstChild)
         )
-
-        result.add(
-            NavigationGutterIconBuilder.create(AllIcons.Gutter.ReadAccess)
-                .setTargets(element.firstChild)
-                .setTooltipText("Navigate to usages")
-                .createLineMarkerInfo(target)
-        )
     }
 }

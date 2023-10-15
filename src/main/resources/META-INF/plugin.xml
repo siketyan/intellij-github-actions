@@ -61,6 +61,10 @@
             implementationClass="jp.s6n.idea.ghactions.marker.NeedsLineMarkerProvider"
             language="yaml"
         />
+        <codeInsight.lineMarkerProvider
+            implementationClass="jp.s6n.idea.ghactions.marker.NeedsUsagesLineMarkerProvider"
+            language="yaml"
+        />
         <configurationType
             implementation="jp.s6n.idea.ghactions.execution.JobRunConfigurationType"
         />
