@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("org.jetbrains.intellij") version "1.16.0"
+    id("org.jetbrains.changelog") version "2.2.0"
 
     kotlin("jvm") version "1.9.10"
     kotlin("plugin.serialization") version "1.9.10"
@@ -21,6 +22,11 @@ intellij {
         "com.jetbrains.sh",
         "org.jetbrains.plugins.yaml",
     ))
+}
+
+changelog {
+    groups.empty()
+    repositoryUrl = "https://github.com/siketyan/intellij-github-actions"
 }
 
 dependencies {
