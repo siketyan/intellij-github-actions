@@ -1,5 +1,6 @@
 {
   parserClass="jp.s6n.idea.ghactions.lang.WorkflowInlineParser"
+  parserUtilClass="jp.s6n.idea.ghactions.lang.WorkflowInlineParserUtil"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
@@ -47,7 +48,9 @@ expression ::= operation | simple_expr
 
 simple_expr ::= negate | call | group | qualifier | literal
 
-call ::= ident LEFT_PAREN (expression OP_COMMA)* expression RIGHT_PAREN
+call ::= ident LEFT_PAREN params? RIGHT_PAREN
+
+params ::= expression (OP_COMMA expression)*
 
 group ::= LEFT_PAREN expression RIGHT_PAREN
 

@@ -18,6 +18,7 @@ public interface WorkflowInlineTypes {
   IElementType NEGATE = new WorkflowInlineElementType("NEGATE");
   IElementType NUMBER_LITERAL = new WorkflowInlineElementType("NUMBER_LITERAL");
   IElementType OPERATION = new WorkflowInlineElementType("OPERATION");
+  IElementType PARAMS = new WorkflowInlineElementType("PARAMS");
   IElementType QUALIFIER = new WorkflowInlineElementType("QUALIFIER");
   IElementType SIMPLE_EXPR = new WorkflowInlineElementType("SIMPLE_EXPR");
   IElementType STRING_LITERAL = new WorkflowInlineElementType("STRING_LITERAL");
@@ -77,6 +78,9 @@ public interface WorkflowInlineTypes {
       }
       else if (type == OPERATION) {
         return new WIOperationImpl(node);
+      }
+      else if (type == PARAMS) {
+        return new WIParamsImpl(node);
       }
       else if (type == QUALIFIER) {
         return new WIQualifierImpl(node);

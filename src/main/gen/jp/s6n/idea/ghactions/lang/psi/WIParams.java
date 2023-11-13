@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WICall extends PsiElement {
+public interface WIParams extends PsiElement {
 
   @NotNull
-  WIIdent getIdent();
-
-  @Nullable
-  WIParams getParams();
+  List<WIExpression> getExpressionList();
 
 }

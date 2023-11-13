@@ -11,14 +11,14 @@ import static jp.s6n.idea.ghactions.lang.WorkflowInlineTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import jp.s6n.idea.ghactions.lang.psi.*;
 
-public class WICallImpl extends ASTWrapperPsiElement implements WICall {
+public class WIParamsImpl extends ASTWrapperPsiElement implements WIParams {
 
-  public WICallImpl(@NotNull ASTNode node) {
+  public WIParamsImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WIVisitor visitor) {
-    visitor.visitCall(this);
+    visitor.visitParams(this);
   }
 
   @Override
@@ -29,14 +29,8 @@ public class WICallImpl extends ASTWrapperPsiElement implements WICall {
 
   @Override
   @NotNull
-  public WIIdent getIdent() {
-    return findNotNullChildByClass(WIIdent.class);
-  }
-
-  @Override
-  @Nullable
-  public WIParams getParams() {
-    return findChildByClass(WIParams.class);
+  public List<WIExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, WIExpression.class);
   }
 
 }

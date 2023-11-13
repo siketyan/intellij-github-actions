@@ -47,6 +47,10 @@ public class WIVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitParams(@NotNull WIParams o) {
+    visitPsiElement(o);
+  }
+
   public void visitQualifier(@NotNull WIQualifier o) {
     visitPsiElement(o);
   }

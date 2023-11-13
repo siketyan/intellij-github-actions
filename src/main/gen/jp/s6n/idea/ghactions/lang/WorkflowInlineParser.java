@@ -40,7 +40,7 @@ public class WorkflowInlineParser implements PsiParser, LightPsiParser {
   };
 
   /* ********************************************************** */
-  // ident LEFT_PAREN (expression OP_COMMA)* expression RIGHT_PAREN
+  // ident LEFT_PAREN params? RIGHT_PAREN
   public static boolean call(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "call")) return false;
     if (!nextTokenIs(b, ID)) return false;
@@ -49,32 +49,16 @@ public class WorkflowInlineParser implements PsiParser, LightPsiParser {
     r = ident(b, l + 1);
     r = r && consumeToken(b, LEFT_PAREN);
     r = r && call_2(b, l + 1);
-    r = r && expression(b, l + 1);
     r = r && consumeToken(b, RIGHT_PAREN);
     exit_section_(b, m, CALL, r);
     return r;
   }
 
-  // (expression OP_COMMA)*
+  // params?
   private static boolean call_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "call_2")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!call_2_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "call_2", c)) break;
-    }
+    params(b, l + 1);
     return true;
-  }
-
-  // expression OP_COMMA
-  private static boolean call_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "call_2_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = expression(b, l + 1);
-    r = r && consumeToken(b, OP_COMMA);
-    exit_section_(b, m, null, r);
-    return r;
   }
 
   /* ********************************************************** */
@@ -196,6 +180,40 @@ public class WorkflowInlineParser implements PsiParser, LightPsiParser {
     r = r && condition_operator(b, l + 1);
     r = r && expression(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // expression (OP_COMMA expression)*
+  public static boolean params(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "params")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, PARAMS, "<params>");
+    r = expression(b, l + 1);
+    r = r && params_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // (OP_COMMA expression)*
+  private static boolean params_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "params_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!params_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "params_1", c)) break;
+    }
+    return true;
+  }
+
+  // OP_COMMA expression
+  private static boolean params_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "params_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, OP_COMMA);
+    r = r && expression(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
