@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.intellij") version "1.16.0"
     id("org.jetbrains.changelog") version "2.2.0"
 
+    kotlin("kapt") version "1.9.20"
     kotlin("jvm") version "1.9.20"
     kotlin("plugin.serialization") version "1.9.20"
 }
@@ -36,16 +37,24 @@ dependencies {
     implementation("org.yaml:snakeyaml:2.2")
 }
 
+kotlin {
+    sourceSets.all {
+        languageSettings {
+            languageVersion = "2.0"
+        }
+    }
+}
+
 sourceSets["main"].java.srcDirs("src/main/gen")
 
 tasks {
     withType<JavaCompile> {
-        sourceCompatibility = "21"
-        targetCompatibility = "21"
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
     }
 
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "21"
+        kotlinOptions.jvmTarget = "17"
     }
 
     patchPluginXml {
