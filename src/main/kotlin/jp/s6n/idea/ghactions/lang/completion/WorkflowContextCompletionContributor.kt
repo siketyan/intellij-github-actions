@@ -37,7 +37,7 @@ class WorkflowContextCompletionContributor : CompletionContributor() {
                 }
 
                 item.children().forEach {
-                    if (it !is Property) return
+                    if (it !is Property) return@forEach
 
                     result.addElement(
                         LookupElementBuilder

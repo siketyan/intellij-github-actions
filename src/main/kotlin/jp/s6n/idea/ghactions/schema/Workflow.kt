@@ -5,11 +5,8 @@ import jp.s6n.idea.ghactions.schema.serialization.KebabCaseNamingStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.decodeFromStream
 import org.yaml.snakeyaml.Yaml
 import java.io.InputStream
-import java.io.PipedInputStream
-import java.io.PipedOutputStream
 
 @Serializable
 data class Workflow(
@@ -26,12 +23,15 @@ data class Workflow(
     companion object {
         private val decoder = Json {
             ignoreUnknownKeys = true
+            isLenient = true
             namingStrategy = KebabCaseNamingStrategy
         }
 
         fun fromYaml(stream: InputStream) =
-            decoder.decodeFromStream<Workflow>(PipedInputStream().also {
-                ObjectMapper().writeValue(PipedOutputStream(it), Yaml().load<Map<String, Any>>(stream))
-            })
+            decoder.decodeFromString<Workflow>(
+                ObjectMapper().writeValueAsString(
+                    Yaml().load<Map<String, Any>>(stream.readAllBytes().decodeToString()),
+                ),
+            )
     }
 }
