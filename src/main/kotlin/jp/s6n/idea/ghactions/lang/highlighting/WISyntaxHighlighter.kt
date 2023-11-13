@@ -18,16 +18,30 @@ class WISyntaxHighlighter : SyntaxHighlighterBase() {
         if (tokenType === null) return EMPTY_KEYS
 
         return when (tokenType) {
-            WorkflowInlineTypes.CONDITION_OPERATOR,
+            WorkflowInlineTypes.OP_EQ,
+            WorkflowInlineTypes.OP_NE,
+            WorkflowInlineTypes.OP_LT,
+            WorkflowInlineTypes.OP_LTE,
+            WorkflowInlineTypes.OP_GT,
+            WorkflowInlineTypes.OP_GTE,
             WorkflowInlineTypes.OP_NOT,
+            WorkflowInlineTypes.OP_AND,
+            WorkflowInlineTypes.OP_OR,
             WorkflowInlineTypes.OP_DOT -> OPERATOR_KEYS
+
+            WorkflowInlineTypes.LEFT_PAREN,
+            WorkflowInlineTypes.RIGHT_PAREN -> PARENTHESES_KEYS
+
+            WorkflowInlineTypes.LEFT_BRACKET,
+            WorkflowInlineTypes.RIGHT_BRACKET -> BRACKETS_KEYS
 
             WorkflowInlineTypes.NULL,
             WorkflowInlineTypes.TRUE,
             WorkflowInlineTypes.FALSE -> KEYWORD_KEYS
 
-            WorkflowInlineTypes.NUMBER_LITERAL -> NUMBER_KEYS
-            WorkflowInlineTypes.STRING_LITERAL -> STRING_KEYS
+            WorkflowInlineTypes.ID -> IDENTIFIER_KEYS
+            WorkflowInlineTypes.NUMBER -> NUMBER_KEYS
+            WorkflowInlineTypes.STRING -> STRING_KEYS
             TokenType.BAD_CHARACTER -> BAD_CHARACTER_KEYS
 
             else -> EMPTY_KEYS
@@ -39,8 +53,20 @@ class WISyntaxHighlighter : SyntaxHighlighterBase() {
             createTextAttributesKey("WI_OPERATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN),
         )
 
+        private val PARENTHESES_KEYS = arrayOf<TextAttributesKey?>(
+            createTextAttributesKey("WI_PARENTHESES", DefaultLanguageHighlighterColors.PARENTHESES),
+        )
+
+        private val BRACKETS_KEYS = arrayOf<TextAttributesKey?>(
+            createTextAttributesKey("WI_BRACKETS", DefaultLanguageHighlighterColors.BRACKETS),
+        )
+
         private val KEYWORD_KEYS = arrayOf<TextAttributesKey?>(
             createTextAttributesKey("WI_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD),
+        )
+
+        private val IDENTIFIER_KEYS = arrayOf<TextAttributesKey?>(
+            createTextAttributesKey("WI_IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER),
         )
 
         private val NUMBER_KEYS = arrayOf<TextAttributesKey?>(
