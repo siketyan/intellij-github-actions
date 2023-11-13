@@ -3,8 +3,8 @@ plugins {
     id("org.jetbrains.intellij") version "1.16.0"
     id("org.jetbrains.changelog") version "2.2.0"
 
-    kotlin("jvm") version "1.9.10"
-    kotlin("plugin.serialization") version "1.9.10"
+    kotlin("jvm") version "1.9.20"
+    kotlin("plugin.serialization") version "1.9.20"
 }
 
 group = "jp.s6n.idea"
@@ -40,12 +40,12 @@ sourceSets["main"].java.srcDirs("src/main/gen")
 
 tasks {
     withType<JavaCompile> {
-        sourceCompatibility = "17"
-        targetCompatibility = "17"
+        sourceCompatibility = "21"
+        targetCompatibility = "21"
     }
 
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = "21"
     }
 
     patchPluginXml {
