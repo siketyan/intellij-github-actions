@@ -8,8 +8,6 @@ class SecretsObject : AbstractObject() {
         )
     }
 
-    override fun name(): String = "secrets"
-
     override fun summary(): String = "Contains the names and values of secrets that are available to a workflow run."
 
     companion object {

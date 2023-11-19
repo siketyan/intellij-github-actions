@@ -161,8 +161,6 @@ class GitHubObject : AbstractObject() {
         )
     }
 
-    override fun name(): String = "github"
-
     override fun summary(): String = "The top-level context available during any job or step in a workflow."
 
     companion object {

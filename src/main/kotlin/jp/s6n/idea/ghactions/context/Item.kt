@@ -16,8 +16,6 @@ interface Item {
         }
     }
 
-    fun name(): String
-
     fun type(): Type
 
     fun summary(): String

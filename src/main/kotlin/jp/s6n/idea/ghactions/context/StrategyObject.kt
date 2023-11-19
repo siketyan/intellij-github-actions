@@ -20,8 +20,6 @@ class StrategyObject : AbstractObject() {
         )
     }
 
-    override fun name(): String = "strategy"
-
     override fun summary(): String = "Information about the matrix execution strategy for the current job."
 
     companion object {

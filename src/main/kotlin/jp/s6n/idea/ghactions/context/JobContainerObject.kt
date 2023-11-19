@@ -6,8 +6,6 @@ class JobContainerObject : AbstractObject() {
         addProperty("network", Item.Type.STRING, "The ID of the container network.")
     }
 
-    override fun name(): String = "container"
-
     override fun summary(): String = "Information about the job's container."
 
     companion object {

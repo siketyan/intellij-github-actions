@@ -28,8 +28,6 @@ class RunnerObject : AbstractObject() {
         )
     }
 
-    override fun name(): String = "runner"
-
     override fun summary(): String = "Information about the runner that is running the current job."
 
     companion object {

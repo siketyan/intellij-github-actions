@@ -2,14 +2,12 @@ package jp.s6n.idea.ghactions.context
 
 class RootObject : AbstractObject() {
     init {
-        add(GitHubObject.INSTANCE)
-        add(JobObject.INSTANCE)
-        add(RunnerObject.INSTANCE)
-        add(SecretsObject.INSTANCE)
-        add(StrategyObject.INSTANCE)
+        add("github", GitHubObject.INSTANCE)
+        add("job", JobObject.INSTANCE)
+        add("runner", RunnerObject.INSTANCE)
+        add("secrets", SecretsObject.INSTANCE)
+        add("strategy", StrategyObject.INSTANCE)
     }
-
-    override fun name(): String = ""
 
     override fun summary(): String = ""
 
