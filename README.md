@@ -1,6 +1,6 @@
 # GitHub Actions Support Plugin for IntelliJ Platform
 
-> **Warning**  
+> [!WARNING]
 > This project is heavily work in progress.
 
 ## Prerequisites
