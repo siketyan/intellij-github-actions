@@ -32,8 +32,8 @@ data class Job(
     val timeoutMinutes: Int? = null,
     val strategy: Strategy? = null,
     val continueOnError: Boolean? = null,
-    // TODO: container
-    // TODO: services
+    val container: Container? = null,
+    val services: Map<String, Container>? = null,
     val uses: String? = null,
     val with: Map<String, String>? = null,
     // TODO: secrets
@@ -97,5 +97,21 @@ data class Job(
                 }
             }
         }
+    }
+
+    @Serializable
+    data class Container(
+        val image: String? = null,
+        val credentials: Credentials? = null,
+        val env: Map<String, String>? = null,
+        val ports: List<Int>? = null,
+        val volumes: List<String>? = null,
+        val options: List<String>? = null,
+    ) {
+        @Serializable
+        data class Credentials(
+            val username: String? = null,
+            val password: String? = null,
+        )
     }
 }

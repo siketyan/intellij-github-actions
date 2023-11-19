@@ -10,13 +10,14 @@ class RootObject(
         add("github", GitHubObject)
         add("env", EnvObject)
         add("vars", VarsObject)
-        add("job", JobObject.INSTANCE)
         add("jobs", JobsObject(workflow))
         add("runner", RunnerObject)
         add("secrets", SecretsObject.INSTANCE)
         add("strategy", StrategyObject)
 
         jobName?.let { workflow.jobs?.get(it) }?.let { job ->
+            add("job", JobObject(job))
+
             job.needs?.let {
                 add("needs", NeedsObject(workflow, it))
             }

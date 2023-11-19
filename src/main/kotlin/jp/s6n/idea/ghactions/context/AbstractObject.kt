@@ -13,6 +13,6 @@ abstract class AbstractObject : Object {
         items[name] = item
     }
 
-    protected fun addProperty(name: String, type: Item.Type, summary: String) =
+    protected fun addProperty(name: String, type: Item.Type, summary: String = "") =
         add(name, Property(this, type, summary))
 }
