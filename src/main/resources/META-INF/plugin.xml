@@ -96,6 +96,9 @@
             language="GitHubWorkflowInline"
         />
         <multiHostInjector
+            implementation="jp.s6n.idea.ghactions.injection.IfExpressionInjector"
+        />
+        <multiHostInjector
             implementation="jp.s6n.idea.ghactions.injection.InlineExpressionInjector"
         />
         <runConfigurationProducer

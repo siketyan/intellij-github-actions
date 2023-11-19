@@ -6,9 +6,10 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import jp.s6n.idea.ghactions.fs.WorkflowFileMatcher
 import jp.s6n.idea.ghactions.lang.WorkflowInlineLanguage
+import org.jetbrains.yaml.YAMLUtil
 import org.jetbrains.yaml.psi.YAMLScalar
 
-class InlineExpressionInjector : MultiHostInjector {
+class IfExpressionInjector : MultiHostInjector {
     override fun getLanguagesToInject(
         registrar: MultiHostRegistrar,
         context: PsiElement
@@ -16,27 +17,17 @@ class InlineExpressionInjector : MultiHostInjector {
         if (!WorkflowFileMatcher.match(context.containingFile)) return
         if (context !is YAMLScalar) return
 
-        var offset = 0
-        while (true) {
-            val start = context.text.indexOf(INLINE_EXPR_START, offset)
-            val end = context.text.indexOf(INLINE_EXPR_END, start)
-            if (start < 0 || end < 0) break
+        val path = YAMLUtil.getConfigFullNameParts(context)
+        if (path.count() < 3) return
+        if (path.last() != "if") return
 
-            registrar
-                .startInjecting(WorkflowInlineLanguage.INSTANCE)
-                .addPlace("", "", context, TextRange.create(start + INLINE_EXPR_START.length, end))
-                .doneInjecting()
-
-            offset = end
-        }
+        registrar
+            .startInjecting(WorkflowInlineLanguage.INSTANCE)
+            .addPlace("", "", context, TextRange.create(0, context.text.length))
+            .doneInjecting()
     }
 
     override fun elementsToInjectIn(): List<Class<YAMLScalar>> {
         return listOf(YAMLScalar::class.java)
-    }
-
-    companion object {
-        private const val INLINE_EXPR_START = "\${{"
-        private const val INLINE_EXPR_END = "}}"
     }
 }
