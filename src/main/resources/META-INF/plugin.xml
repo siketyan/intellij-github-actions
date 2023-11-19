@@ -84,6 +84,10 @@
             language="GitHubWorkflowInline"
         />
         <languageInjectionContributor
+            implementationClass="jp.s6n.idea.ghactions.injection.ContextualExpressionInjector"
+            language="yaml"
+        />
+        <languageInjectionContributor
             implementationClass="jp.s6n.idea.ghactions.injection.RunScriptInjector"
             language="yaml"
         />
@@ -94,9 +98,6 @@
         <lang.parserDefinition
             implementationClass="jp.s6n.idea.ghactions.lang.WorkflowInlineParserDefinition"
             language="GitHubWorkflowInline"
-        />
-        <multiHostInjector
-            implementation="jp.s6n.idea.ghactions.injection.IfExpressionInjector"
         />
         <multiHostInjector
             implementation="jp.s6n.idea.ghactions.injection.InlineExpressionInjector"
