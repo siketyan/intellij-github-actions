@@ -5,12 +5,14 @@ class JobObject : AbstractObject() {
         add(JobContainerObject.INSTANCE)
 
         addProperty(
-            "status", Property.Type.STRING,
+            "status", Item.Type.STRING,
             "The current status of the job."
         )
     }
 
     override fun name(): String = "job"
+
+    override fun summary(): String = "Information about the currently running job."
 
     companion object {
         val INSTANCE = JobObject()

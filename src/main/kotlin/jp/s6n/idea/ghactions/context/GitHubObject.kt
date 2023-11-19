@@ -3,165 +3,167 @@ package jp.s6n.idea.ghactions.context
 class GitHubObject : AbstractObject() {
     init {
         addProperty(
-            "action", Property.Type.STRING,
+            "action", Item.Type.STRING,
             "The name of the action currently running, or the id of a step.",
         )
         addProperty(
-            "action_path", Property.Type.STRING,
+            "action_path", Item.Type.STRING,
             "The path where an action is located.",
         )
         addProperty(
-            "action_ref", Property.Type.STRING,
+            "action_ref", Item.Type.STRING,
             "For a step executing an action, this is the ref of the action being executed.",
         )
         addProperty(
-            "action_repository", Property.Type.STRING,
+            "action_repository", Item.Type.STRING,
             "For a step executing an action, this is the owner and repository name of the action.",
         )
         addProperty(
-            "action_status", Property.Type.STRING,
+            "action_status", Item.Type.STRING,
             "For a composite action, the current result of the composite action.",
         )
         addProperty(
-            "actor", Property.Type.STRING,
+            "actor", Item.Type.STRING,
             "The username of the user that triggered the initial workflow run.",
         )
         addProperty(
-            "actor_id", Property.Type.STRING,
+            "actor_id", Item.Type.STRING,
             "The account ID of the person or app that triggered the initial workflow run.",
         )
         addProperty(
-            "api_url", Property.Type.STRING,
+            "api_url", Item.Type.STRING,
             "The URL of the GitHub REST API.",
         )
         addProperty(
-            "base_ref", Property.Type.STRING,
+            "base_ref", Item.Type.STRING,
             "The base_ref or target branch of the pull request in a workflow run.",
         )
         addProperty(
-            "env", Property.Type.STRING,
+            "env", Item.Type.STRING,
             "Path on the runner to the file that sets environment variables from workflow commands.",
         )
         addProperty(
-            "event", Property.Type.STRING,
+            "event", Item.Type.STRING,
             "The full event webhook payload.",
         )
         addProperty(
-            "event_name", Property.Type.STRING,
+            "event_name", Item.Type.STRING,
             "The name of the event that triggered the workflow run.",
         )
         addProperty(
-            "event_path", Property.Type.STRING,
+            "event_path", Item.Type.STRING,
             "The path to the file on the runner that contains the full event webhook payload.",
         )
         addProperty(
-            "graphql_url", Property.Type.STRING,
+            "graphql_url", Item.Type.STRING,
             "The URL of the GitHub GraphQL API.",
         )
         addProperty(
-            "head_ref", Property.Type.STRING,
+            "head_ref", Item.Type.STRING,
             "The head_ref or source branch of the pull request in a workflow run.",
         )
         addProperty(
-            "job", Property.Type.STRING,
+            "job", Item.Type.STRING,
             "The job_id of the current job.",
         )
         addProperty(
-            "path", Property.Type.STRING,
+            "path", Item.Type.STRING,
             "Path on the runner to the file that sets system PATH variables from workflow commands.",
         )
         addProperty(
-            "ref", Property.Type.STRING,
+            "ref", Item.Type.STRING,
             "The fully-formed ref of the branch or tag that triggered the workflow run.",
         )
         addProperty(
-            "ref_name", Property.Type.STRING,
+            "ref_name", Item.Type.STRING,
             "The short ref name of the branch or tag that triggered the workflow run.",
         )
         addProperty(
-            "ref_protected", Property.Type.BOOLEAN,
+            "ref_protected", Item.Type.BOOLEAN,
             "true if branch protections or rulesets are configured for the ref that triggered the workflow run.",
         )
         addProperty(
-            "ref_type", Property.Type.STRING,
+            "ref_type", Item.Type.STRING,
             "The type of ref that triggered the workflow run. Valid values are branch or tag."
         )
         addProperty(
-            "repository", Property.Type.STRING,
+            "repository", Item.Type.STRING,
             "The owner and repository name.",
         )
         addProperty(
-            "repository_id", Property.Type.STRING,
+            "repository_id", Item.Type.STRING,
             "The ID of the repository.",
         )
         addProperty(
-            "repository_owner", Property.Type.STRING,
+            "repository_owner", Item.Type.STRING,
             "The repository owner's username.",
         )
         addProperty(
-            "repository_owner_id", Property.Type.STRING,
+            "repository_owner_id", Item.Type.STRING,
             "The repository owner's account ID.",
         )
         addProperty(
-            "repositoryUrl", Property.Type.STRING,
+            "repositoryUrl", Item.Type.STRING,
             "The Git URL to the repository.",
         )
         addProperty(
-            "retention_days", Property.Type.STRING,
+            "retention_days", Item.Type.STRING,
             "The number of days that workflow run logs and artifacts are kept.",
         )
         addProperty(
-            "run_id", Property.Type.STRING,
+            "run_id", Item.Type.STRING,
             "A unique number for each workflow run within a repository.",
         )
         addProperty(
-            "run_number", Property.Type.STRING,
+            "run_number", Item.Type.STRING,
             "A unique number for each run of a particular workflow in a repository.",
         )
         addProperty(
-            "run_attempt", Property.Type.STRING,
+            "run_attempt", Item.Type.STRING,
             "A unique number for each attempt of a particular workflow run in a repository.",
         )
         addProperty(
-            "secret_source", Property.Type.STRING,
+            "secret_source", Item.Type.STRING,
             "The source of a secret used in a workflow.",
         )
         addProperty(
-            "server_url", Property.Type.STRING,
+            "server_url", Item.Type.STRING,
             "The URL of the GitHub server.",
         )
         addProperty(
-            "sha", Property.Type.STRING,
+            "sha", Item.Type.STRING,
             "The commit SHA that triggered the workflow.",
         )
         addProperty(
-            "token", Property.Type.STRING,
+            "token", Item.Type.STRING,
             "A token to authenticate on behalf of the GitHub App installed on your repository.",
         )
         addProperty(
-            "triggering_actor", Property.Type.STRING,
+            "triggering_actor", Item.Type.STRING,
             "The username of the user that initiated the workflow run.",
         )
         addProperty(
-            "workflow", Property.Type.STRING,
+            "workflow", Item.Type.STRING,
             "The name of the workflow.",
         )
         addProperty(
-            "workflow_ref", Property.Type.STRING,
+            "workflow_ref", Item.Type.STRING,
             "The ref path to the workflow.",
         )
         addProperty(
-            "workflow_sha", Property.Type.STRING,
+            "workflow_sha", Item.Type.STRING,
             "The commit SHA for the workflow file.",
         )
         addProperty(
-            "workspace", Property.Type.STRING,
+            "workspace", Item.Type.STRING,
             "The default working directory on the runner for steps, and the default location of your" +
                 " repository when using the checkout action.",
         )
     }
 
     override fun name(): String = "github"
+
+    override fun summary(): String = "The top-level context available during any job or step in a workflow."
 
     companion object {
         val INSTANCE = GitHubObject()

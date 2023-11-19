@@ -5,12 +5,14 @@ abstract class AbstractObject(vararg items: Item) : Object {
 
     override fun find(name: String): Item? = items[name]
 
-    override fun children(): List<Item> = items.values.toList()
+    override fun type(): Item.Type = Item.Type.OBJECT
+
+    override fun children(): List<Pair<String, Item>> = items.entries.map { e -> Pair(e.key, e.value) }
 
     protected fun add(item: Item) {
         items[item.name()] = item
     }
 
-    protected fun addProperty(name: String, type: Property.Type, summary: String) =
+    protected fun addProperty(name: String, type: Item.Type, summary: String) =
         add(Property(this, name, type, summary))
 }

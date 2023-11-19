@@ -11,7 +11,6 @@ import com.intellij.patterns.PlatformPatterns
 import com.intellij.psi.util.findTopmostParentOfType
 import com.intellij.util.ProcessingContext
 import jp.s6n.idea.ghactions.context.Object
-import jp.s6n.idea.ghactions.context.Property
 import jp.s6n.idea.ghactions.context.RootObject
 import jp.s6n.idea.ghactions.lang.WorkflowInlineTypes
 import jp.s6n.idea.ghactions.lang.psi.WIQualifier
@@ -26,29 +25,19 @@ class WorkflowContextCompletionContributor : CompletionContributor() {
             var parent: Object = RootObject.INSTANCE
             var qualifier = parameters.position.findTopmostParentOfType<WIQualifier>() ?: return
 
-            while (true) {
-                val item = parent.find(qualifier.ident.text) as? Object ?: break
+            while (qualifier.ident.text != "IntellijIdeaRulezzz") {
+                parent = parent.find(qualifier.ident.text) as? Object ?: return
+                qualifier = qualifier.qualifier ?: return
+            }
 
-                if (qualifier.qualifier?.text != "IntellijIdeaRulezzz") {
-                    qualifier = qualifier.qualifier ?: break
-                    parent = item
-
-                    continue
-                }
-
-                item.children().forEach {
-                    if (it !is Property) return@forEach
-
-                    result.addElement(
-                        LookupElementBuilder
-                            .create(it.name)
-                            .withIcon(AllIcons.Nodes.Field)
-                            .withTypeText(it.type.toString())
-                            .withTailText(it.summary)
-                    )
-                }
-
-                break
+            parent.children().forEach { (name, item) ->
+                result.addElement(
+                    LookupElementBuilder
+                        .create(name)
+                        .withIcon(AllIcons.Nodes.Field)
+                        .withTypeText(item.type().toString())
+                        .withTailText(item.summary())
+                )
             }
         }
     }

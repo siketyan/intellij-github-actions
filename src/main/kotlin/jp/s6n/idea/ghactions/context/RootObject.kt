@@ -11,6 +11,8 @@ class RootObject : AbstractObject() {
 
     override fun name(): String = ""
 
+    override fun summary(): String = ""
+
     companion object {
         val INSTANCE = RootObject()
     }
