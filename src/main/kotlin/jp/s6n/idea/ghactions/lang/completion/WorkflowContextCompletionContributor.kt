@@ -25,7 +25,7 @@ class WorkflowContextCompletionContributor : CompletionContributor() {
             var parent: Object = RootObject.INSTANCE
             var qualifier = parameters.position.findTopmostParentOfType<WIQualifier>() ?: return
 
-            while (qualifier.ident.text != "IntellijIdeaRulezzz") {
+            while (!qualifier.ident.text.endsWith("IntellijIdeaRulezzz")) {
                 parent = parent.find(qualifier.ident.text) as? Object ?: return
                 qualifier = qualifier.qualifier ?: return
             }
