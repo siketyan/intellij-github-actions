@@ -1,17 +1,29 @@
 package jp.s6n.idea.ghactions.context
 
-class RootObject : AbstractObject() {
+import jp.s6n.idea.ghactions.schema.Workflow
+
+class RootObject(
+    workflow: Workflow,
+    jobName: String? = null,
+) : AbstractObject() {
     init {
-        add("github", GitHubObject.INSTANCE)
+        add("github", GitHubObject)
+        add("env", EnvObject)
+        add("vars", VarsObject)
         add("job", JobObject.INSTANCE)
-        add("runner", RunnerObject.INSTANCE)
+        add("jobs", JobsObject(workflow))
+        add("runner", RunnerObject)
         add("secrets", SecretsObject.INSTANCE)
-        add("strategy", StrategyObject.INSTANCE)
-    }
+        add("strategy", StrategyObject)
 
-    override fun summary(): String = ""
+        jobName?.let { workflow.jobs?.get(it) }?.let { job ->
+            job.needs?.let {
+                add("needs", NeedsObject(workflow, it))
+            }
 
-    companion object {
-        val INSTANCE = RootObject()
+            job.steps?.let {
+                add("steps", StepsObject(it))
+            }
+        }
     }
 }

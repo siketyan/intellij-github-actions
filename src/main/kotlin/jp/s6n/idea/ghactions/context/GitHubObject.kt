@@ -1,6 +1,6 @@
 package jp.s6n.idea.ghactions.context
 
-class GitHubObject : AbstractObject() {
+object GitHubObject : AbstractObject() {
     init {
         addProperty(
             "action", Item.Type.STRING,
@@ -162,8 +162,4 @@ class GitHubObject : AbstractObject() {
     }
 
     override fun summary(): String = "The top-level context available during any job or step in a workflow."
-
-    companion object {
-        val INSTANCE = GitHubObject()
-    }
 }

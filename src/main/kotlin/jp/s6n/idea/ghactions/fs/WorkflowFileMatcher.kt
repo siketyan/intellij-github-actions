@@ -1,5 +1,6 @@
 package jp.s6n.idea.ghactions.fs
 
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiFile
 
 object WorkflowFileMatcher {
@@ -8,6 +9,8 @@ object WorkflowFileMatcher {
     private fun match(path: String) =
         path.matches(reWorkflowPath)
 
+    fun match(file: VirtualFile) = match(file.path)
+
     fun match(file: PsiFile) =
-        file.virtualFile?.let { match(it.path) } ?: true
+        file.virtualFile?.let { match(it) } ?: true
 }

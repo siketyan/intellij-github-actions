@@ -18,7 +18,7 @@ interface Item {
 
     fun type(): Type
 
-    fun summary(): String
+    fun summary(): String = ""
 
     fun children(): List<Pair<String, Item>> = listOf()
 }

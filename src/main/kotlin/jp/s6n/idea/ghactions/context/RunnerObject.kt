@@ -1,6 +1,6 @@
 package jp.s6n.idea.ghactions.context
 
-class RunnerObject : AbstractObject() {
+object RunnerObject : AbstractObject() {
     init {
         addProperty(
             "name", Item.Type.STRING,
@@ -29,8 +29,4 @@ class RunnerObject : AbstractObject() {
     }
 
     override fun summary(): String = "Information about the runner that is running the current job."
-
-    companion object {
-        val INSTANCE = RunnerObject()
-    }
 }

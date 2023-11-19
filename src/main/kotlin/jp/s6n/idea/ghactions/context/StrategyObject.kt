@@ -1,6 +1,6 @@
 package jp.s6n.idea.ghactions.context
 
-class StrategyObject : AbstractObject() {
+object StrategyObject : AbstractObject() {
     init {
         addProperty(
             "fail-fast", Item.Type.BOOLEAN,
@@ -21,8 +21,4 @@ class StrategyObject : AbstractObject() {
     }
 
     override fun summary(): String = "Information about the matrix execution strategy for the current job."
-
-    companion object {
-        val INSTANCE = StrategyObject()
-    }
 }
