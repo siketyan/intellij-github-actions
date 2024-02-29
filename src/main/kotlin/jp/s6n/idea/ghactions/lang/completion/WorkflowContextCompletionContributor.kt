@@ -7,6 +7,7 @@ import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.completion.CompletionType
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.icons.AllIcons
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.psi.util.PsiEditorUtil
@@ -19,8 +20,10 @@ import jp.s6n.idea.ghactions.fs.WorkflowFileMatcher
 import jp.s6n.idea.ghactions.lang.WorkflowInlineTypes
 import jp.s6n.idea.ghactions.lang.psi.WIQualifier
 import jp.s6n.idea.ghactions.schema.Workflow
+import kotlinx.serialization.SerializationException
 import org.jetbrains.yaml.YAMLUtil
 import org.jetbrains.yaml.psi.YAMLPsiElement
+import org.yaml.snakeyaml.error.YAMLException
 
 class WorkflowContextCompletionContributor : CompletionContributor() {
     private val provider = object : CompletionProvider<CompletionParameters>() {
@@ -46,7 +49,14 @@ class WorkflowContextCompletionContributor : CompletionContributor() {
                         }
                     }
 
-            val workflow = Workflow.fromYaml(file.inputStream)
+            val workflow = try {
+                Workflow.fromYaml(file.inputStream)
+            } catch (e: SerializationException) {
+                return Logger.getInstance(this.javaClass).warn(e)
+            } catch (e: YAMLException) {
+                return Logger.getInstance(this.javaClass).warn(e)
+            }
+
             var parent: Object = RootObject(workflow, jobName)
             var qualifier = parameters.position.findTopmostParentOfType<WIQualifier>() ?: return
 
