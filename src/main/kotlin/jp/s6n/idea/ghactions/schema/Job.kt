@@ -1,16 +1,14 @@
 package jp.s6n.idea.ghactions.schema
 
 import jp.s6n.idea.ghactions.schema.serialization.StringOrStringArraySerializer
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.*
+import kotlinx.serialization.json.Json.Default.encodeToString
 
 @Serializable
 data class Job(
@@ -91,7 +89,7 @@ data class Job(
                     return Matrix(
                         dimensions = map.mapValues { (_, v) -> (v as JsonArray).map { (it as JsonPrimitive).content } },
                         include = (include as JsonArray).map {
-                            (it as JsonObject).mapValues { v -> (v as JsonPrimitive).content }
+                            (it as JsonObject).mapValues { entry -> (entry.value as JsonPrimitive).content }
                         }
                     )
                 }

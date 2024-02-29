@@ -35,6 +35,8 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.57.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
     implementation("org.yaml:snakeyaml:2.2")
+
+    testImplementation(kotlin("test"))
 }
 
 kotlin {
