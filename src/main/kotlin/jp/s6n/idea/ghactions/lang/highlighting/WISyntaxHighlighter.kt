@@ -39,9 +39,13 @@ class WISyntaxHighlighter : SyntaxHighlighterBase() {
             WorkflowInlineTypes.TRUE,
             WorkflowInlineTypes.FALSE -> KEYWORD_KEYS
 
-            WorkflowInlineTypes.ID -> IDENTIFIER_KEYS
+            WorkflowInlineTypes.INTEGER,
             WorkflowInlineTypes.NUMBER -> NUMBER_KEYS
+
             WorkflowInlineTypes.STRING -> STRING_KEYS
+
+            WorkflowInlineTypes.ID -> IDENTIFIER_KEYS
+
             TokenType.BAD_CHARACTER -> BAD_CHARACTER_KEYS
 
             else -> EMPTY_KEYS
