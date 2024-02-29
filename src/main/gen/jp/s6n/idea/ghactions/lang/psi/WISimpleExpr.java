@@ -8,12 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface WISimpleExpr extends PsiElement {
 
   @Nullable
-  WICall getCall();
-
-  @Nullable
-  WIGroup getGroup();
-
-  @Nullable
   WILiteral getLiteral();
 
   @Nullable

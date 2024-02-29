@@ -28,15 +28,15 @@ public class WIQualifierImpl extends ASTWrapperPsiElement implements WIQualifier
   }
 
   @Override
-  @NotNull
-  public WIIdent getIdent() {
-    return findNotNullChildByClass(WIIdent.class);
-  }
-
-  @Override
   @Nullable
   public WIIndexer getIndexer() {
     return findChildByClass(WIIndexer.class);
+  }
+
+  @Override
+  @NotNull
+  public WIQualifiable getQualifiable() {
+    return findNotNullChildByClass(WIQualifiable.class);
   }
 
   @Override

@@ -9,16 +9,20 @@ import jp.s6n.idea.ghactions.lang.psi.impl.*;
 public interface WorkflowInlineTypes {
 
   IElementType CALL = new WorkflowInlineElementType("CALL");
+  IElementType CONDITION = new WorkflowInlineElementType("CONDITION");
   IElementType CONDITION_OPERATOR = new WorkflowInlineElementType("CONDITION_OPERATOR");
   IElementType EXPRESSION = new WorkflowInlineElementType("EXPRESSION");
   IElementType GROUP = new WorkflowInlineElementType("GROUP");
   IElementType IDENT = new WorkflowInlineElementType("IDENT");
   IElementType INDEXER = new WorkflowInlineElementType("INDEXER");
   IElementType LITERAL = new WorkflowInlineElementType("LITERAL");
+  IElementType LOGICAL_OPERATOR = new WorkflowInlineElementType("LOGICAL_OPERATOR");
   IElementType NEGATE = new WorkflowInlineElementType("NEGATE");
   IElementType NUMBER_LITERAL = new WorkflowInlineElementType("NUMBER_LITERAL");
+  IElementType OPERABLE = new WorkflowInlineElementType("OPERABLE");
   IElementType OPERATION = new WorkflowInlineElementType("OPERATION");
   IElementType PARAMS = new WorkflowInlineElementType("PARAMS");
+  IElementType QUALIFIABLE = new WorkflowInlineElementType("QUALIFIABLE");
   IElementType QUALIFIER = new WorkflowInlineElementType("QUALIFIER");
   IElementType SIMPLE_EXPR = new WorkflowInlineElementType("SIMPLE_EXPR");
   IElementType STRING_LITERAL = new WorkflowInlineElementType("STRING_LITERAL");
@@ -52,6 +56,9 @@ public interface WorkflowInlineTypes {
       if (type == CALL) {
         return new WICallImpl(node);
       }
+      else if (type == CONDITION) {
+        return new WIConditionImpl(node);
+      }
       else if (type == CONDITION_OPERATOR) {
         return new WIConditionOperatorImpl(node);
       }
@@ -70,17 +77,26 @@ public interface WorkflowInlineTypes {
       else if (type == LITERAL) {
         return new WILiteralImpl(node);
       }
+      else if (type == LOGICAL_OPERATOR) {
+        return new WILogicalOperatorImpl(node);
+      }
       else if (type == NEGATE) {
         return new WINegateImpl(node);
       }
       else if (type == NUMBER_LITERAL) {
         return new WINumberLiteralImpl(node);
       }
+      else if (type == OPERABLE) {
+        return new WIOperableImpl(node);
+      }
       else if (type == OPERATION) {
         return new WIOperationImpl(node);
       }
       else if (type == PARAMS) {
         return new WIParamsImpl(node);
+      }
+      else if (type == QUALIFIABLE) {
+        return new WIQualifiableImpl(node);
       }
       else if (type == QUALIFIER) {
         return new WIQualifierImpl(node);

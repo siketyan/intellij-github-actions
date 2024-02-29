@@ -7,11 +7,11 @@ import com.intellij.psi.PsiElement;
 
 public interface WIQualifier extends PsiElement {
 
-  @NotNull
-  WIIdent getIdent();
-
   @Nullable
   WIIndexer getIndexer();
+
+  @NotNull
+  WIQualifiable getQualifiable();
 
   @Nullable
   WIQualifier getQualifier();

@@ -46,7 +46,7 @@ external root ::= expression
 
 expression ::= operation | simple_expr
 
-simple_expr ::= negate | call | group | qualifier | literal
+simple_expr ::= negate | qualifier | literal
 
 call ::= ident LEFT_PAREN params? RIGHT_PAREN
 
@@ -54,13 +54,21 @@ params ::= expression (OP_COMMA expression)*
 
 group ::= LEFT_PAREN expression RIGHT_PAREN
 
-operation ::= simple_expr condition_operator expression
+operation ::= operable (logical_operator operable)*
 
-condition_operator ::= OP_LTE | OP_LT | OP_GTE | OP_GT | OP_EQ | OP_NE | OP_AND | OP_OR
+operable ::= condition | simple_expr
+
+logical_operator ::= OP_AND | OP_OR
+
+condition ::= simple_expr condition_operator simple_expr
+
+condition_operator ::= OP_LTE | OP_LT | OP_GTE | OP_GT | OP_EQ | OP_NE
 
 negate ::= OP_NOT simple_expr
 
-qualifier ::= ident (indexer | (OP_DOT qualifier))?
+qualifier ::= qualifiable (indexer | (OP_DOT qualifier))?
+
+qualifiable ::= group | call | ident
 
 indexer ::= LEFT_BRACKET integer RIGHT_BRACKET
 

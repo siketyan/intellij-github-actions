@@ -11,14 +11,14 @@ import static jp.s6n.idea.ghactions.lang.WorkflowInlineTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import jp.s6n.idea.ghactions.lang.psi.*;
 
-public class WIOperationImpl extends ASTWrapperPsiElement implements WIOperation {
+public class WIQualifiableImpl extends ASTWrapperPsiElement implements WIQualifiable {
 
-  public WIOperationImpl(@NotNull ASTNode node) {
+  public WIQualifiableImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull WIVisitor visitor) {
-    visitor.visitOperation(this);
+    visitor.visitQualifiable(this);
   }
 
   @Override
@@ -28,15 +28,21 @@ public class WIOperationImpl extends ASTWrapperPsiElement implements WIOperation
   }
 
   @Override
-  @NotNull
-  public List<WILogicalOperator> getLogicalOperatorList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WILogicalOperator.class);
+  @Nullable
+  public WICall getCall() {
+    return findChildByClass(WICall.class);
   }
 
   @Override
-  @NotNull
-  public List<WIOperable> getOperableList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, WIOperable.class);
+  @Nullable
+  public WIGroup getGroup() {
+    return findChildByClass(WIGroup.class);
+  }
+
+  @Override
+  @Nullable
+  public WIIdent getIdent() {
+    return findChildByClass(WIIdent.class);
   }
 
 }

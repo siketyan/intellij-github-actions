@@ -11,6 +11,10 @@ public class WIVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCondition(@NotNull WICondition o) {
+    visitPsiElement(o);
+  }
+
   public void visitConditionOperator(@NotNull WIConditionOperator o) {
     visitPsiElement(o);
   }
@@ -35,6 +39,10 @@ public class WIVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitLogicalOperator(@NotNull WILogicalOperator o) {
+    visitPsiElement(o);
+  }
+
   public void visitNegate(@NotNull WINegate o) {
     visitPsiElement(o);
   }
@@ -43,11 +51,19 @@ public class WIVisitor extends PsiElementVisitor {
     visitLiteral(o);
   }
 
+  public void visitOperable(@NotNull WIOperable o) {
+    visitPsiElement(o);
+  }
+
   public void visitOperation(@NotNull WIOperation o) {
     visitPsiElement(o);
   }
 
   public void visitParams(@NotNull WIParams o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQualifiable(@NotNull WIQualifiable o) {
     visitPsiElement(o);
   }
 

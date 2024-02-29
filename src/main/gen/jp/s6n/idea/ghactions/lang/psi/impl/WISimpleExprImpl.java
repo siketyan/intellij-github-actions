@@ -29,18 +29,6 @@ public class WISimpleExprImpl extends ASTWrapperPsiElement implements WISimpleEx
 
   @Override
   @Nullable
-  public WICall getCall() {
-    return findChildByClass(WICall.class);
-  }
-
-  @Override
-  @Nullable
-  public WIGroup getGroup() {
-    return findChildByClass(WIGroup.class);
-  }
-
-  @Override
-  @Nullable
   public WILiteral getLiteral() {
     return findChildByClass(WILiteral.class);
   }

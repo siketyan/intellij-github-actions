@@ -5,12 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface WIOperation extends PsiElement {
+public interface WIQualifiable extends PsiElement {
 
-  @NotNull
-  List<WILogicalOperator> getLogicalOperatorList();
+  @Nullable
+  WICall getCall();
 
-  @NotNull
-  List<WIOperable> getOperableList();
+  @Nullable
+  WIGroup getGroup();
+
+  @Nullable
+  WIIdent getIdent();
 
 }

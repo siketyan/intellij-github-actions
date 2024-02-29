@@ -4,7 +4,7 @@ package jp.s6n.idea.ghactions.lang;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import static jp.s6n.idea.ghactions.lang.WorkflowInlineTypes.*;
-import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
+import static jp.s6n.idea.ghactions.lang.WorkflowInlineParserUtil.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.TokenSet;
@@ -62,7 +62,20 @@ public class WorkflowInlineParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // OP_LTE | OP_LT | OP_GTE | OP_GT | OP_EQ | OP_NE | OP_AND | OP_OR
+  // simple_expr condition_operator simple_expr
+  public static boolean condition(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "condition")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CONDITION, "<condition>");
+    r = simple_expr(b, l + 1);
+    r = r && condition_operator(b, l + 1);
+    r = r && simple_expr(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // OP_LTE | OP_LT | OP_GTE | OP_GT | OP_EQ | OP_NE
   public static boolean condition_operator(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "condition_operator")) return false;
     boolean r;
@@ -73,8 +86,6 @@ public class WorkflowInlineParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, OP_GT);
     if (!r) r = consumeToken(b, OP_EQ);
     if (!r) r = consumeToken(b, OP_NE);
-    if (!r) r = consumeToken(b, OP_AND);
-    if (!r) r = consumeToken(b, OP_OR);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -145,6 +156,19 @@ public class WorkflowInlineParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // OP_AND | OP_OR
+  public static boolean logical_operator(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "logical_operator")) return false;
+    if (!nextTokenIs(b, "<logical operator>", OP_AND, OP_OR)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, LOGICAL_OPERATOR, "<logical operator>");
+    r = consumeToken(b, OP_AND);
+    if (!r) r = consumeToken(b, OP_OR);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
   // OP_NOT simple_expr
   public static boolean negate(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "negate")) return false;
@@ -171,15 +195,48 @@ public class WorkflowInlineParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // simple_expr condition_operator expression
+  // condition | simple_expr
+  public static boolean operable(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "operable")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, OPERABLE, "<operable>");
+    r = condition(b, l + 1);
+    if (!r) r = simple_expr(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // operable (logical_operator operable)*
   public static boolean operation(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "operation")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, OPERATION, "<operation>");
-    r = simple_expr(b, l + 1);
-    r = r && condition_operator(b, l + 1);
-    r = r && expression(b, l + 1);
+    r = operable(b, l + 1);
+    r = r && operation_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // (logical_operator operable)*
+  private static boolean operation_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "operation_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!operation_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "operation_1", c)) break;
+    }
+    return true;
+  }
+
+  // logical_operator operable
+  private static boolean operation_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "operation_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = logical_operator(b, l + 1);
+    r = r && operable(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -218,15 +275,29 @@ public class WorkflowInlineParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ident (indexer | (OP_DOT qualifier))?
+  // group | call | ident
+  public static boolean qualifiable(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "qualifiable")) return false;
+    if (!nextTokenIs(b, "<qualifiable>", ID, LEFT_PAREN)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, QUALIFIABLE, "<qualifiable>");
+    r = group(b, l + 1);
+    if (!r) r = call(b, l + 1);
+    if (!r) r = ident(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // qualifiable (indexer | (OP_DOT qualifier))?
   public static boolean qualifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "qualifier")) return false;
-    if (!nextTokenIs(b, ID)) return false;
+    if (!nextTokenIs(b, "<qualifier>", ID, LEFT_PAREN)) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = ident(b, l + 1);
+    Marker m = enter_section_(b, l, _NONE_, QUALIFIER, "<qualifier>");
+    r = qualifiable(b, l + 1);
     r = r && qualifier_1(b, l + 1);
-    exit_section_(b, m, QUALIFIER, r);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -260,14 +331,12 @@ public class WorkflowInlineParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // negate | call | group | qualifier | literal
+  // negate | qualifier | literal
   public static boolean simple_expr(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "simple_expr")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, SIMPLE_EXPR, "<simple expr>");
     r = negate(b, l + 1);
-    if (!r) r = call(b, l + 1);
-    if (!r) r = group(b, l + 1);
     if (!r) r = qualifier(b, l + 1);
     if (!r) r = literal(b, l + 1);
     exit_section_(b, l, m, r, false, null);
