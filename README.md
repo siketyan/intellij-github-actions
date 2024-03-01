@@ -5,7 +5,7 @@
 
 ## Prerequisites
 
-- IntelliJ Platform v232 (2023.x)
+- IntelliJ Platform v232 - v233 (2023.2 - 2023.3)
 - Shell Script Plugin (official)
 - YAML Plugin (official)
 
